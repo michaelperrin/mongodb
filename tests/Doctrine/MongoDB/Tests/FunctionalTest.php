@@ -46,7 +46,7 @@ class FunctionalTest extends BaseTest
 
         $db = $this->conn->selectDatabase(self::$dbName);
         $coll = $db->createCollection('test');
-        $coll->batchInsert($data);
+        $coll->insertMany($data);
 
         $map = 'function() {
             emit(this.username, { count: 1, likes: this.likes });
@@ -82,7 +82,7 @@ class FunctionalTest extends BaseTest
 
         $coll = $db->selectCollection('users');
         $this->assertFalse($coll->isFieldIndexed('test'));
-        $coll->ensureIndex(array('test' => 1));
+        $coll->createIndex(array('test' => 1));
         $this->assertTrue($coll->isFieldIndexed('test'));
     }
 
@@ -93,7 +93,7 @@ class FunctionalTest extends BaseTest
         $coll = $db->selectCollection('users');
 
         $document = array('test' => 'jwage');
-        $coll->insert($document);
+        $coll->insertOne($document);
 
         $coll->update(array('_id' => $document['_id']), array('$set' => array('test' => 'jon')));
 
@@ -110,7 +110,7 @@ class FunctionalTest extends BaseTest
             'testing' => 'ok',
             'file' => new GridFSFile(__DIR__.'/FunctionalTest.php')
         );
-        $files->insert($file);
+        $files->insertOne($file);
 
         $this->assertTrue(isset($file['_id']));
 

@@ -23,9 +23,9 @@ class CursorTest extends BaseTest
 
         $collection = $this->conn->selectCollection(self::$dbName, 'CursorTest');
         $collection->drop();
-        $collection->insert($this->doc1);
-        $collection->insert($this->doc2);
-        $collection->insert($this->doc3);
+        $collection->insertOne($this->doc1);
+        $collection->insertOne($this->doc2);
+        $collection->insertOne($this->doc3);
 
         $this->cursor = $collection->createQueryBuilder()->getQuery()->execute();
         $this->cursor->sort(array('name' => 1));
@@ -80,7 +80,7 @@ class CursorTest extends BaseTest
         $doc = array('_id' => array('key' => 'value'), 'test' => 'value');
 
         $collection = $this->conn->selectCollection(self::$dbName, 'tmp');
-        $collection->insert($doc);
+        $collection->insertOne($doc);
 
         $cursor = $collection->find();
 

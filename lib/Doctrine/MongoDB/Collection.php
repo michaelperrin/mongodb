@@ -75,7 +75,7 @@ class Collection
      * Constructor.
      *
      * @param Database            $database        Database to which this collection belongs
-     * @param \MongoDB\Collection $mongoCollection MongoCollection instance being wrapped
+     * @param \MongoDB\Collection $mongoCollection MongoDB\Collection instance being wrapped
      * @param EventManager        $evm             EventManager instance
      * @param integer             $numRetries      Number of times to retry queries
      */
@@ -137,7 +137,7 @@ class Collection
     }
 
     /**
-     * Wrapper method for MongoDB\Collection::batchInsert().
+     * Wrapper method for MongoDB\Collection::insertMany().
      *
      * This method will dispatch preBatchInsert and postBatchInsert events.
      *
@@ -146,7 +146,7 @@ class Collection
      * @param array $options
      * @return array|boolean
      */
-    public function batchInsert(array &$a, array $options = array())
+    public function insertMany(array &$a, array $options = array())
     {
         if ($this->eventManager->hasListeners(Events::preBatchInsert)) {
             $eventArgs = new EventArgs($this, $a, $options);
@@ -221,26 +221,26 @@ class Collection
     }
 
     /**
-     * Wrapper method for MongoDB\Collection::deleteIndex().
+     * Wrapper method for MongoDB\Collection::dropIndex().
      *
      * @see http://php.net/manual/en/mongocollection.deleteindex.php
      * @param array|string $keys
      * @return array
      */
-    public function deleteIndex($keys)
+    public function dropIndex($keys)
     {
-        return $this->mongoCollection->deleteIndex($keys);
+        return $this->mongoCollection->dropIndex($keys);
     }
 
     /**
-     * Wrapper method for MongoDB\Collection::deleteIndexes().
+     * Wrapper method for MongoDB\Collection::dropIndexes().
      *
      * @see http://php.net/manual/en/mongocollection.deleteindexes.php
      * @return array
      */
-    public function deleteIndexes()
+    public function dropIndexes()
     {
-        return $this->mongoCollection->deleteIndexes();
+        return $this->mongoCollection->dropIndexes();
     }
 
     /**
@@ -304,20 +304,20 @@ class Collection
     }
 
     /**
-     * Wrapper method for MongoDB\Collection::ensureIndex().
+     * Wrapper method for MongoDB\Collection::createIndex().
      *
      * @see http://php.net/manual/en/mongocollection.ensureindex.php
      * @param array $keys
      * @param array $options
      * @return array|boolean
      */
-    public function ensureIndex(array $keys, array $options = array())
+    public function createIndex(array $keys, array $options = array())
     {
         $options = isset($options['safe']) ? $this->convertWriteConcern($options) : $options;
         $options = isset($options['timeout']) ? $this->convertSocketTimeout($options) : $options;
         $options = isset($options['wtimeout']) ? $this->convertWriteTimeout($options) : $options;
 
-        return $this->mongoCollection->ensureIndex($keys, $options);
+        return $this->mongoCollection->createIndex($keys, $options);
     }
 
     /**
@@ -483,14 +483,14 @@ class Collection
     }
 
     /**
-     * Wrapper method for MongoDB\Collection::getIndexInfo().
+     * Wrapper method for MongoDB\Collection::listIndexes().
      *
      * @see http://php.net/manual/en/mongocollection.getindexinfo.php
      * @return array
      */
-    public function getIndexInfo()
+    public function listIndexes()
     {
-        return $this->mongoCollection->getIndexInfo();
+        return $this->mongoCollection->listIndexes();
     }
 
     /**
@@ -504,14 +504,14 @@ class Collection
     }
 
     /**
-     * Wrapper method for MongoDB\Collection::getName().
+     * Wrapper method for \MongoDB\Collection::getName().
      *
      * @see http://php.net/manual/en/mongocollection.getname.php
      * @return string
      */
     public function getName()
     {
-        return $this->mongoCollection->getName();
+        return $this->mongoCollection->getCollectionName();
     }
 
     /**
@@ -628,7 +628,7 @@ class Collection
     }
 
     /**
-     * Wrapper method for MongoDB\Collection::insert().
+     * Wrapper method for \MongoDB\Collection::insertOne().
      *
      * This method will dispatch preInsert and postInsert events.
      *
@@ -637,7 +637,7 @@ class Collection
      * @param array $options
      * @return array|boolean
      */
-    public function insert(array &$a, array $options = array())
+    public function insertOne(array &$a, array $options = array())
     {
         if ($this->eventManager->hasListeners(Events::preInsert)) {
             $eventArgs = new EventArgs($this, $a, $options);
@@ -664,7 +664,7 @@ class Collection
      */
     public function isFieldIndexed($fieldName)
     {
-        $indexes = $this->getIndexInfo();
+        $indexes = $this->listIndexes();
         foreach ($indexes as $index) {
             if (isset($index['key']) && isset($index['key'][$fieldName])) {
                 return true;
@@ -942,7 +942,7 @@ class Collection
             : array($options, array());
 
         $command = array();
-        $command['aggregate'] = $this->mongoCollection->getName();
+        $command['aggregate'] = $this->mongoCollection->getCollectionName();
         $command['pipeline'] = $pipeline;
         $command = array_merge($command, $commandOptions);
 
@@ -976,7 +976,7 @@ class Collection
      * @param array $pipeline
      * @param array $options
      * @return CommandCursor
-     * @throws BadMethodCallException if MongoDB\Collection::aggregateCursor() is not available
+     * @throws BadMethodCallException if MongoDB\Collection::aggregate() is not available
      */
     protected function doAggregateCursor(array $pipeline, array $options = array())
     {
@@ -994,7 +994,7 @@ class Collection
 
         $mongoCollection = $this->mongoCollection;
         $commandCursor = $this->retry(function() use ($mongoCollection, $pipeline, $commandOptions) {
-            return $mongoCollection->aggregateCursor($pipeline, $commandOptions);
+            return $mongoCollection->aggregate($pipeline, $commandOptions);
         });
 
         $commandCursor = $this->wrapCommandCursor($commandCursor);
@@ -1007,9 +1007,9 @@ class Collection
     }
 
     /**
-     * Execute the batchInsert query.
+     * Execute the insertMany query.
      *
-     * @see Collection::batchInsert()
+     * @see Collection::insertMany()
      * @param array $a
      * @param array $options
      * @return array|boolean
@@ -1019,7 +1019,7 @@ class Collection
         $options = isset($options['safe']) ? $this->convertWriteConcern($options) : $options;
         $options = isset($options['wtimeout']) ? $this->convertWriteTimeout($options) : $options;
         $options = isset($options['timeout']) ? $this->convertSocketTimeout($options) : $options;
-        return $this->mongoCollection->batchInsert($a, $options);
+        return $this->mongoCollection->insertMany($a, $options);
     }
 
     /**
@@ -1038,7 +1038,7 @@ class Collection
             : array($options, array());
 
         $command = array();
-        $command['count'] = $this->mongoCollection->getName();
+        $command['count'] = $this->mongoCollection->getCollectionName();
         $command['query'] = (object) $query;
         $command = array_merge($command, $commandOptions);
 
@@ -1071,7 +1071,7 @@ class Collection
             : array($options, array());
 
         $command = array();
-        $command['distinct'] = $this->mongoCollection->getName();
+        $command['distinct'] = $this->mongoCollection->getCollectionName();
         $command['key'] = $field;
         $command['query'] = (object) $query;
         $command = array_merge($command, $commandOptions);
@@ -1135,7 +1135,7 @@ class Collection
             : array($options, array());
 
         $command = array();
-        $command['findandmodify'] = $this->mongoCollection->getName();
+        $command['findandmodify'] = $this->mongoCollection->getCollectionName();
         $command['query'] = (object) $query;
         $command['remove'] = true;
         $command = array_merge($command, $commandOptions);
@@ -1166,7 +1166,7 @@ class Collection
             : array($options, array());
 
         $command = array();
-        $command['findandmodify'] = $this->mongoCollection->getName();
+        $command['findandmodify'] = $this->mongoCollection->getCollectionName();
         $command['query'] = (object) $query;
         $command['update'] = (object) $newObj;
         $command = array_merge($command, $commandOptions);
@@ -1229,7 +1229,7 @@ class Collection
             : array($options, array());
 
         $command = array();
-        $command['ns'] = $this->mongoCollection->getName();
+        $command['ns'] = $this->mongoCollection->getCollectionName();
         $command['initial'] = (object) $initial;
         $command['$reduce'] = $reduce;
 
@@ -1280,7 +1280,7 @@ class Collection
         $options = isset($options['safe']) ? $this->convertWriteConcern($options) : $options;
         $options = isset($options['wtimeout']) ? $this->convertWriteTimeout($options) : $options;
         $options = isset($options['timeout']) ? $this->convertSocketTimeout($options) : $options;
-        $result = $this->mongoCollection->insert($document, $options);
+        $result = $this->mongoCollection->insertOne($document, $options);
         if (isset($document['_id'])) {
             $a['_id'] = $document['_id'];
         }
@@ -1306,7 +1306,7 @@ class Collection
             : array($options, array());
 
         $command = array();
-        $command['mapreduce'] = $this->mongoCollection->getName();
+        $command['mapreduce'] = $this->mongoCollection->getCollectionName();
         $command['map'] = $map;
         $command['reduce'] = $reduce;
         $command['query'] = (object) $query;
@@ -1363,7 +1363,7 @@ class Collection
             : array($options, array());
 
         $command = array();
-        $command['geoNear'] = $this->mongoCollection->getName();
+        $command['geoNear'] = $this->mongoCollection->getCollectionName();
         $command['near'] = $near;
         $command['spherical'] = isset($near['type']);
         $command['query'] = (object) $query;

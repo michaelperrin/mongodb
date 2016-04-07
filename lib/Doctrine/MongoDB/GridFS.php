@@ -100,7 +100,7 @@ class GridFS extends Collection
     }
 
     /**
-     * Execute the batchInsert query.
+     * Execute the insertMany query.
      *
      * @see Collection::doBatchInsert()
      * @param array $a

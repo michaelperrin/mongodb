@@ -30,7 +30,7 @@ class LoggableCollectionTest extends \PHPUnit_Framework_TestCase
             ->getMock();
 
         $database->expects($this->any())
-            ->method('getName')
+            ->method('getCollectionName')
             ->will($this->returnValue(self::databaseName));
 
         $mongoCollection = $this->getMockBuilder('MongoDB\Collection')
@@ -38,7 +38,7 @@ class LoggableCollectionTest extends \PHPUnit_Framework_TestCase
             ->getMock();
 
         $mongoCollection->expects($this->any())
-            ->method('getName')
+            ->method('getCollectionName')
             ->will($this->returnValue(self::collectionName));
 
         $eventManager = $this->getMockBuilder('Doctrine\Common\EventManager')

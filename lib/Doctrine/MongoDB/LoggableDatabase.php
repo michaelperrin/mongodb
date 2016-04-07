@@ -40,13 +40,13 @@ class LoggableDatabase extends Database implements Loggable
     /**
      * Constructor.
      *
-     * @param Connection   $connection     Connection used to create Collections
-     * @param \MongoDB     $mongoDB        MongoDB instance being wrapped
-     * @param EventManager $evm            EventManager instance
-     * @param integer      $numRetries     Number of times to retry queries
-     * @param callable     $loggerCallable The logger callable
+     * @param Connection        $connection     Connection used to create Collections
+     * @param \MongoDB\Database $mongoDB        MongoDB instance being wrapped
+     * @param EventManager      $evm            EventManager instance
+     * @param integer           $numRetries     Number of times to retry queries
+     * @param callable          $loggerCallable The logger callable
      */
-    public function __construct(Connection $connection, \MongoDB $mongoDB, EventManager $evm, $numRetries, $loggerCallable)
+    public function __construct(Connection $connection, \MongoDB\Database $mongoDB, EventManager $evm, $numRetries, $loggerCallable)
     {
         if ( ! is_callable($loggerCallable)) {
             throw new \InvalidArgumentException('$loggerCallable must be a valid callback');

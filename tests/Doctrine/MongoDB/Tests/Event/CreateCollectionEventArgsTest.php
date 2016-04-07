@@ -19,7 +19,7 @@ class CreateCollectionEventArgsTest extends \PHPUnit_Framework_TestCase
         $createCollectionEventArgs = new CreateCollectionEventArgs($invoker, $name, $options);
 
         $this->assertSame($invoker, $createCollectionEventArgs->getInvoker());
-        $this->assertSame($name, $createCollectionEventArgs->getName());
+        $this->assertSame($name, $createCollectionEventArgs->getCollectionName());
         $this->assertSame($options, $createCollectionEventArgs->getOptions());
     }
 }

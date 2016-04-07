@@ -41,7 +41,7 @@ class LoggableCollection extends Collection implements Loggable
      * Constructor.
      *
      * @param Database            $database        Database to which this collection belongs
-     * @param \MongoDB\Collection $mongoCollection MongoCollection instance being wrapped
+     * @param \MongoDB\Collection $mongoCollection MongoDB\Collection instance being wrapped
      * @param EventManager        $evm             EventManager instance
      * @param integer             $numRetries      Number of times to retry queries
      * @param callable            $loggerCallable  The logger callable
@@ -88,18 +88,18 @@ class LoggableCollection extends Collection implements Loggable
     }
 
     /**
-     * @see Collection::batchInsert()
+     * @see Collection::insertMany()
      */
-    public function batchInsert(array &$a, array $options = array())
+    public function insertMany(array &$a, array $options = array())
     {
         $this->log(array(
-            'batchInsert' => true,
+            'insertMany' => true,
             'num' => count($a),
             'data' => $a,
             'options' => $options,
         ));
 
-        return parent::batchInsert($a, $options);
+        return parent::insertMany($a, $options);
     }
 
     /**
@@ -128,26 +128,26 @@ class LoggableCollection extends Collection implements Loggable
      */
 
     /**
-     * @see Collection::deleteIndex()
+     * @see Collection::dropIndex()
      */
-    public function deleteIndex($keys)
+    public function dropIndex($keys)
     {
         $this->log(array(
-            'deleteIndex' => true,
+            'dropIndex' => true,
             'keys' => $keys,
         ));
 
-        return parent::deleteIndex($keys);
+        return parent::dropIndex($keys);
     }
 
     /**
-     * @see Collection::deleteIndexes()
+     * @see Collection::dropIndexes()
      */
-    public function deleteIndexes()
+    public function dropIndexes()
     {
-        $this->log(array('deleteIndexes' => true));
+        $this->log(array('dropIndexes' => true));
 
-        return parent::deleteIndexes();
+        return parent::dropIndexes();
     }
 
     /**
@@ -176,17 +176,17 @@ class LoggableCollection extends Collection implements Loggable
     }
 
     /**
-     * @see Collection::ensureIndex()
+     * @see Collection::createIndex()
      */
-    public function ensureIndex(array $keys, array $options = array())
+    public function createIndex(array $keys, array $options = array())
     {
         $this->log(array(
-            'ensureIndex' => true,
+            'createIndex' => true,
             'keys' => $keys,
             'options' => $options,
         ));
 
-        return parent::ensureIndex($keys, $options);
+        return parent::createIndex($keys, $options);
     }
 
     /**
@@ -260,13 +260,13 @@ class LoggableCollection extends Collection implements Loggable
     }
 
     /**
-     * @see Collection::getIndexInfo()
+     * @see Collection::listIndexes()
      */
-    public function getIndexInfo()
+    public function listIndexes()
     {
-        $this->log(array('getIndexInfo' => true));
+        $this->log(array('listIndexes' => true));
 
-        return parent::getIndexInfo();
+        return parent::listIndexes();
     }
 
     /**

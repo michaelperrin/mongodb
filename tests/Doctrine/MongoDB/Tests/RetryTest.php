@@ -22,7 +22,7 @@ class RetryTest extends BaseTest
     {
         $test = $this->conn->selectDatabase('test')->selectCollection('test');
         $doc = array('test' => 'test');
-        $test->insert($doc);
+        $test->insertOne($doc);
         $check = $test->findOne(array('test' => 'test'));
         $this->assertEquals('test', $check['test']);
         $check = $test->find(array('test' => 'test'));

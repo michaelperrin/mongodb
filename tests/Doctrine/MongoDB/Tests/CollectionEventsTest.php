@@ -55,7 +55,7 @@ class CollectionEventsTest extends \PHPUnit_Framework_TestCase
             array(Events::postBatchInsert, new MutableEventArgs($collection, $result)),
         ));
 
-        $this->assertSame($result, $collection->batchInsert($documents, $options));
+        $this->assertSame($result, $collection->insertMany($documents, $options));
     }
 
     public function testDistinct()
@@ -199,7 +199,7 @@ class CollectionEventsTest extends \PHPUnit_Framework_TestCase
             array(Events::postInsert, new MutableEventArgs($collection, $result)),
         ));
 
-        $this->assertSame($result, $collection->insert($document, $options));
+        $this->assertSame($result, $collection->insertOne($document, $options));
     }
 
     public function testMapReduce()
