@@ -40,8 +40,8 @@ class MapReduceEventArgs extends BaseEventArgs
      * Constructor.
      *
      * @param object            $invoker
-     * @param string|\MongoCode $map
-     * @param string|\MongoCode $reduce
+     * @param string|\MongoDB\BSON\JavaScript $map
+     * @param string|\MongoDB\BSON\JavaScript $reduce
      * @param array             $out
      * @param array             $query
      * @param array             $options
@@ -65,7 +65,7 @@ class MapReduceEventArgs extends BaseEventArgs
     }
 
     /**
-     * @return \MongoCode|string
+     * @return \MongoDB\BSON\JavaScript|string
      */
     public function getMap()
     {
@@ -73,7 +73,7 @@ class MapReduceEventArgs extends BaseEventArgs
     }
 
     /**
-     * @return \MongoCode|string
+     * @return \MongoDB\BSON\JavaScript|string
      */
     public function getReduce()
     {

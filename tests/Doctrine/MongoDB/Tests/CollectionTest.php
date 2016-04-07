@@ -571,10 +571,10 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         $command = array('group' => array(
             'ns' => self::collectionName,
             'initial' => (object) $initial,
-            '$reduce' => new \MongoCode('reduce'),
+            '$reduce' => new \MongoDB\BSON\JavaScript('reduce'),
             'cond' => (object) $options['cond'],
             'key' => $keys,
-            'finalize' => new \MongoCode('finalize'),
+            'finalize' => new \MongoDB\BSON\JavaScript('finalize'),
         ));
 
         $commandResult = array('ok' => 1, 'retval' => $grouped, 'count' => 5, 'keys' => 2);
@@ -685,11 +685,11 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
             ->method('command')
             ->with($this->logicalAnd(
                 new ArrayHasKeyAndValue('mapreduce', self::collectionName),
-                new ArrayHasKeyAndValue('map', new \MongoCode('map')),
-                new ArrayHasKeyAndValue('reduce', new \MongoCode('reduce')),
+                new ArrayHasKeyAndValue('map', new \MongoDB\BSON\JavaScript('map')),
+                new ArrayHasKeyAndValue('reduce', new \MongoDB\BSON\JavaScript('reduce')),
                 new ArrayHasKeyAndValue('out', $out),
                 new ArrayHasKeyAndValue('query', (object) array('deleted' => false)),
-                new ArrayHasKeyAndValue('finalize', new \MongoCode('finalize'))
+                new ArrayHasKeyAndValue('finalize', new \MongoDB\BSON\JavaScript('finalize'))
             ))
             ->will($this->returnValue($commandResult));
 

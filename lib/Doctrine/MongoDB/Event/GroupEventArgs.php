@@ -39,9 +39,9 @@ class GroupEventArgs extends BaseEventArgs
      * Constructor.
      *
      * @param object                  $invoker
-     * @param array|string|\MongoCode $keys
+     * @param array|string|\MongoDB\BSON\JavaScript $keys
      * @param array                   $initial
-     * @param string|\MongoCode       $reduce
+     * @param string|\MongoDB\BSON\JavaScript       $reduce
      * @param array                   $options
      */
     public function __construct($invoker, $keys, array $initial, $reduce, array $options = array())
@@ -62,7 +62,7 @@ class GroupEventArgs extends BaseEventArgs
     }
 
     /**
-     * @return array|\MongoCode|string
+     * @return array|\MongoDB\BSON\JavaScript|string
      */
     public function getKeys()
     {
@@ -78,7 +78,7 @@ class GroupEventArgs extends BaseEventArgs
     }
 
     /**
-     * @return \MongoCode|string
+     * @return \MongoDB\BSON\JavaScript|string
      */
     public function getReduce()
     {

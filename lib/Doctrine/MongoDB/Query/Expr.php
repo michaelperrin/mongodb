@@ -1336,7 +1336,7 @@ class Expr
      *
      * @see Builder::where()
      * @see http://docs.mongodb.org/manual/reference/operator/where/
-     * @param string|\MongoCode $javascript
+     * @param string|\MongoDB\BSON\JavaScript $javascript
      * @return $this
      */
     public function where($javascript)

@@ -507,7 +507,7 @@ class Builder
     /**
      * Set the "finalize" option for a mapReduce or group command.
      *
-     * @param string|\MongoCode $finalize
+     * @param string|\MongoDB\BSON\JavaScript $finalize
      * @return $this
      * @throws BadMethodCallException if the query is not a mapReduce or group command
      */
@@ -796,7 +796,7 @@ class Builder
      * @see http://docs.mongodb.org/manual/reference/command/group/
      * @param mixed $keys
      * @param array $initial
-     * @param string|\MongoCode $reduce
+     * @param string|\MongoDB\BSON\JavaScript $reduce
      * @param array $options
      * @return $this
      */
@@ -974,7 +974,7 @@ class Builder
      * The "out" option defaults to inline, like {@link Builder::mapReduce()}.
      *
      * @see http://docs.mongodb.org/manual/reference/command/mapReduce/
-     * @param string|\MongoCode $map
+     * @param string|\MongoDB\BSON\JavaScript $map
      * @return $this
      */
     public function map($map)
@@ -993,8 +993,8 @@ class Builder
      * Change the query type to a mapReduce command.
      *
      * @see http://docs.mongodb.org/manual/reference/command/mapReduce/
-     * @param string|\MongoCode $map
-     * @param string|\MongoCode $reduce
+     * @param string|\MongoDB\BSON\JavaScript $map
+     * @param string|\MongoDB\BSON\JavaScript $reduce
      * @param array|string $out
      * @param array $options
      * @return $this
@@ -1392,7 +1392,7 @@ class Builder
     /**
      * Set the "reduce" option for a mapReduce or group command.
      *
-     * @param string|\MongoCode $reduce
+     * @param string|\MongoDB\BSON\JavaScript $reduce
      * @return $this
      * @throws BadMethodCallException if the query is not a mapReduce or group command
      */
@@ -1788,7 +1788,7 @@ class Builder
      *
      * @see Expr::where()
      * @see http://docs.mongodb.org/manual/reference/operator/where/
-     * @param string|\MongoCode $javascript
+     * @param string|\MongoDB\BSON\JavaScript $javascript
      * @return $this
      */
     public function where($javascript)

@@ -9,11 +9,11 @@ class MapReduceEventArgsTest extends \PHPUnit_Framework_TestCase
     public function testMapReduceEventArgs()
     {
         $invoker = new \stdClass();
-        $map = new \MongoCode('');
-        $reduce = new \MongoCode('');
+        $map = new \MongoDB\BSON\JavaScript('');
+        $reduce = new \MongoDB\BSON\JavaScript('');
         $out = array('inline' => true);
         $query = array('x' => 1);
-        $options = array('finalize' => new \MongoCode(''));
+        $options = array('finalize' => new \MongoDB\BSON\JavaScript(''));
 
         $mapReduceEventArgs = new MapReduceEventArgs($invoker, $map, $reduce, $out, $query, $options);
 
@@ -24,11 +24,11 @@ class MapReduceEventArgsTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($query, $mapReduceEventArgs->getQuery());
         $this->assertSame($options, $mapReduceEventArgs->getOptions());
 
-        $map2 = new \MongoCode('a');
-        $reduce2 = new \MongoCode('b');
+        $map2 = new \MongoDB\BSON\JavaScript('a');
+        $reduce2 = new \MongoDB\BSON\JavaScript('b');
         $out2 = array('inline' => false);
         $query2 = array('x' => 2);
-        $options2 = array('finalize' => new \MongoCode('c'));
+        $options2 = array('finalize' => new \MongoDB\BSON\JavaScript('c'));
 
         $mapReduceEventArgs->setMap($map2);
         $mapReduceEventArgs->setReduce($reduce2);

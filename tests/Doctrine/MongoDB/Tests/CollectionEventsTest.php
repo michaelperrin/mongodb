@@ -172,8 +172,8 @@ class CollectionEventsTest extends \PHPUnit_Framework_TestCase
     {
         $keys = 'x';
         $initial = array('count' => 0);
-        $reduce = new \MongoCode('');
-        $options = array('finalize' => new \MongoCode(''));
+        $reduce = new \MongoDB\BSON\JavaScript('');
+        $options = array('finalize' => new \MongoDB\BSON\JavaScript(''));
         $result = array(array('count' => '1'));
 
         $collection = $this->getMockCollection(array('doGroup' => $result));
@@ -204,11 +204,11 @@ class CollectionEventsTest extends \PHPUnit_Framework_TestCase
 
     public function testMapReduce()
     {
-        $map = new \MongoCode('');
-        $reduce = new \MongoCode('');
+        $map = new \MongoDB\BSON\JavaScript('');
+        $reduce = new \MongoDB\BSON\JavaScript('');
         $out = array('inline' => true);
         $query = array('x' => 1);
-        $options = array('finalize' => new \MongoCode(''));
+        $options = array('finalize' => new \MongoDB\BSON\JavaScript(''));
         $result = array(array('count' => '1'));
 
         $collection = $this->getMockCollection(array('doMapReduce' => $result));

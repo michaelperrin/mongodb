@@ -598,9 +598,9 @@ class Collection
      *
      * @see http://www.php.net/manual/en/mongocollection.group.php
      * @see http://docs.mongodb.org/manual/reference/command/group/
-     * @param array|string|\MongoCode $keys
+     * @param array|string|\MongoDB\BSON\JavaScript $keys
      * @param array                   $initial
-     * @param string|\MongoCode       $reduce
+     * @param string|\MongoDB\BSON\JavaScript       $reduce
      * @param array                   $options
      * @return ArrayIterator
      * @throws ResultException if the command fails
@@ -683,8 +683,8 @@ class Collection
      * returned.
      *
      * @see http://docs.mongodb.org/manual/reference/command/mapReduce/
-     * @param string|\MongoCode $map
-     * @param string|\MongoCode $reduce
+     * @param string|\MongoDB\BSON\JavaScript $map
+     * @param string|\MongoDB\BSON\JavaScript $reduce
      * @param array|string      $out
      * @param array             $query
      * @param array             $options
@@ -1215,9 +1215,9 @@ class Collection
      * Execute the group command.
      *
      * @see Collection::group()
-     * @param array|string|\MongoCode $keys
+     * @param array|string|\MongoDB\BSON\JavaScript $keys
      * @param array                   $initial
-     * @param string|\MongoCode       $reduce
+     * @param string|\MongoDB\BSON\JavaScript       $reduce
      * @param array                   $options
      * @return ArrayIterator
      * @throws ResultException if the command fails
@@ -1233,7 +1233,7 @@ class Collection
         $command['initial'] = (object) $initial;
         $command['$reduce'] = $reduce;
 
-        if (is_string($keys) || $keys instanceof \MongoCode) {
+        if (is_string($keys) || $keys instanceof \MongoDB\BSON\JavaScript) {
             $command['$keyf'] = $keys;
         } else {
             $command['key'] = $keys;
@@ -1243,7 +1243,7 @@ class Collection
 
         foreach (array('$keyf', '$reduce', 'finalize') as $key) {
             if (isset($command[$key]) && is_string($command[$key])) {
-                $command[$key] = new \MongoCode($command[$key]);
+                $command[$key] = new \MongoDB\BSON\JavaScript($command[$key]);
             }
         }
 
@@ -1291,8 +1291,8 @@ class Collection
      * Execute the mapReduce command.
      *
      * @see Collection::mapReduce()
-     * @param string|\MongoCode $map
-     * @param string|\MongoCode $reduce
+     * @param string|\MongoDB\BSON\JavaScript $map
+     * @param string|\MongoDB\BSON\JavaScript $reduce
      * @param array|string      $out
      * @param array             $query
      * @param array             $options
@@ -1315,7 +1315,7 @@ class Collection
 
         foreach (array('map', 'reduce', 'finalize') as $key) {
             if (isset($command[$key]) && is_string($command[$key])) {
-                $command[$key] = new \MongoCode($command[$key]);
+                $command[$key] = new \MongoDB\BSON\JavaScript($command[$key]);
             }
         }
 
