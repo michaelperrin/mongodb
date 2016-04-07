@@ -16,6 +16,7 @@
     "require": {
         "php": "^5.5 || ^7.0",
         "ext-mongodb": "^1.1",
+        "mongodb/mongodb": "^1.0.0",
         "doctrine/common": "^2.2"
     },
     "require-dev": {
