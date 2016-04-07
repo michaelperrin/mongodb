@@ -560,7 +560,7 @@ class Collection
     {
         $readPref = $this->getReadPreference();
 
-        return \MongoClient::RP_PRIMARY !== $readPref['type'];
+        return \MongoDB\Client::RP_PRIMARY !== $readPref['type'];
     }
 
     /**
@@ -583,9 +583,9 @@ class Collection
             // Preserve existing tags for non-primary read preferences
             $readPref = $this->getReadPreference();
             $tags = ! empty($readPref['tagsets']) ? $readPref['tagsets'] : array();
-            $this->mongoCollection->setReadPreference(\MongoClient::RP_SECONDARY_PREFERRED, $tags);
+            $this->mongoCollection->setReadPreference(\MongoDB\Client::RP_SECONDARY_PREFERRED, $tags);
         } else {
-            $this->mongoCollection->setReadPreference(\MongoClient::RP_PRIMARY);
+            $this->mongoCollection->setReadPreference(\MongoDB\Client::RP_PRIMARY);
         }
 
         return $prevSlaveOkay;

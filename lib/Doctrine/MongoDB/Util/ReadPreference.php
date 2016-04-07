@@ -40,11 +40,11 @@ final class ReadPreference
      * the string constants expected by setReadPreference() methods.
      */
     private static $types = array(
-        \MongoClient::RP_PRIMARY,
-        \MongoClient::RP_PRIMARY_PREFERRED,
-        \MongoClient::RP_SECONDARY,
-        \MongoClient::RP_SECONDARY_PREFERRED,
-        \MongoClient::RP_NEAREST,
+        \MongoDB\Client::RP_PRIMARY,
+        \MongoDB\Client::RP_PRIMARY_PREFERRED,
+        \MongoDB\Client::RP_SECONDARY,
+        \MongoDB\Client::RP_SECONDARY_PREFERRED,
+        \MongoDB\Client::RP_NEAREST,
     );
 
     /**
@@ -72,7 +72,7 @@ final class ReadPreference
      * Converts return values from getReadPreference() methods to the format
      * accepted by setReadPreference() methods.
      *
-     * This is necessary for MongoClient, MongoDB, and MongoDB\Collection classes
+     * This is necessary for \MongoDB\Client, MongoDB, and MongoDB\Collection classes
      * in driver versions between 1.3.0 and 1.3.3.
      *
      * @since 1.1

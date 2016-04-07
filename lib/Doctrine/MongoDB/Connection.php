@@ -23,7 +23,7 @@ use Doctrine\Common\EventManager;
 use Doctrine\MongoDB\Event\EventArgs;
 
 /**
- * Wrapper for the MongoClient class.
+ * Wrapper for the MongoDB\Client class.
  *
  * @since  1.0
  * @author Jonathan H. Wage <jonwage@gmail.com>
@@ -31,21 +31,21 @@ use Doctrine\MongoDB\Event\EventArgs;
 class Connection
 {
     /**
-     * The PHP MongoClient instance being wrapped.
+     * The PHP \MongoDB\Client instance being wrapped.
      *
-     * @var \MongoClient
+     * @var \MongoDB\Client
      */
     protected $mongoClient;
 
     /**
-     * Server string used to construct the MongoClient instance (optional).
+     * Server string used to construct the \MongoDB\Client instance (optional).
      *
      * @var string
      */
     protected $server;
 
     /**
-     * Options used to construct the MongoClient instance (optional).
+     * Options used to construct the \MongoDB\Client instance (optional).
      *
      * @var array
      */
@@ -68,17 +68,17 @@ class Connection
     /**
      * Constructor.
      *
-     * If $server is an existing MongoClient instance, the $options parameter
+     * If $server is an existing \MongoDB\Client instance, the $options parameter
      * will not be used.
      *
-     * @param string|\MongoClient $server  Server string or MongoClient instance
-     * @param array               $options MongoClient constructor options
+     * @param string|\MongoDB\Client $server  Server string or \MongoDB\Client instance
+     * @param array               $options \MongoDB\Client constructor options
      * @param Configuration       $config  Configuration instance
      * @param EventManager        $evm     EventManager instance
      */
     public function __construct($server = null, array $options = array(), Configuration $config = null, EventManager $evm = null)
     {
-        if ($server instanceof \MongoClient || $server instanceof \Mongo) {
+        if ($server instanceof \MongoDB\Client || $server instanceof \Mongo) {
             $this->mongoClient = $server;
         } else {
             $this->server = $server;
@@ -89,7 +89,7 @@ class Connection
     }
 
     /**
-     * Wrapper method for MongoClient::close().
+     * Wrapper method for \MongoDB\Client::close().
      *
      * @see http://php.net/manual/en/mongoclient.close.php
      * @return boolean
@@ -101,7 +101,7 @@ class Connection
     }
 
     /**
-     * Wrapper method for MongoClient::connect().
+     * Wrapper method for \MongoDB\Client::connect().
      *
      * @see http://php.net/manual/en/mongoclient.connect.php
      * @return boolean
@@ -117,7 +117,7 @@ class Connection
     }
 
     /**
-     * Wrapper method for MongoClient::dropDB().
+     * Wrapper method for \MongoDB\Client::dropDB().
      *
      * This method will dispatch preDropDatabase and postDropDatabase events.
      *
@@ -162,10 +162,10 @@ class Connection
     }
 
     /**
-     * Get the MongoClient instance being wrapped.
+     * Get the \MongoDB\Client instance being wrapped.
      *
      * @deprecated 1.1 Replaced by getMongoClient(); will be removed for 2.0
-     * @return \MongoClient
+     * @return \MongoDB\Client
      */
     public function getMongo()
     {
@@ -173,24 +173,24 @@ class Connection
     }
 
     /**
-     * Set the MongoClient instance to wrap.
+     * Set the \MongoDB\Client instance to wrap.
      *
      * @deprecated 1.1 Will be removed for 2.0
-     * @param \MongoClient $mongoClient
+     * @param \MongoDB\Client $mongoClient
      */
     public function setMongo($mongoClient)
     {
-        if ( ! ($mongoClient instanceof \MongoClient || $mongoClient instanceof \Mongo)) {
-            throw new \InvalidArgumentException('MongoClient or Mongo instance required');
+        if ( ! ($mongoClient instanceof \MongoDB\Client || $mongoClient instanceof \Mongo)) {
+            throw new \InvalidArgumentException('\MongoDB\Client or Mongo instance required');
         }
 
         $this->mongoClient = $mongoClient;
     }
 
     /**
-     * Get the MongoClient instance being wrapped.
+     * Get the \MongoDB\Client instance being wrapped.
      *
-     * @return \MongoClient
+     * @return \MongoDB\Client
      */
     public function getMongoClient()
     {
@@ -199,7 +199,7 @@ class Connection
     }
 
     /**
-     * Wrapper method for MongoClient::getReadPreference().
+     * Wrapper method for \MongoDB\Client::getReadPreference().
      *
      * For driver versions between 1.3.0 and 1.3.3, the return value will be
      * converted for consistency with {@link Connection::setReadPreference()}.
@@ -214,7 +214,7 @@ class Connection
     }
 
     /**
-     * Wrapper method for MongoClient::setReadPreference().
+     * Wrapper method for \MongoDB\Client::setReadPreference().
      *
      * @see http://php.net/manual/en/mongoclient.setreadpreference.php
      * @param string $readPreference
@@ -242,7 +242,7 @@ class Connection
     }
 
     /**
-     * Gets the $status property of the wrapped MongoClient instance.
+     * Gets the $status property of the wrapped \MongoDB\Client instance.
      *
      * @deprecated 1.1 No longer used in driver; Will be removed for 1.2
      * @return string
@@ -250,7 +250,7 @@ class Connection
     public function getStatus()
     {
         $this->initialize();
-        if ( ! ($this->mongoClient instanceof \MongoClient || $this->mongoClient instanceof \Mongo)) {
+        if ( ! ($this->mongoClient instanceof \MongoDB\Client || $this->mongoClient instanceof \Mongo)) {
             return null;
         }
 
@@ -258,7 +258,7 @@ class Connection
     }
 
     /**
-     * Construct the wrapped MongoClient instance if necessary.
+     * Construct the wrapped \MongoDB\Client instance if necessary.
      *
      * This method will dispatch preConnect and postConnect events.
      */
@@ -279,7 +279,7 @@ class Connection
         $options = isset($options['wTimeout']) ? $this->convertWriteTimeout($options) : $options;
 
         $this->mongoClient = $this->retry(function() use ($server, $options) {
-            return new \MongoClient($server, $options);
+            return new \MongoDB\Client($server, $options);
         });
 
         if ($this->eventManager->hasListeners(Events::postConnect)) {
@@ -294,7 +294,7 @@ class Connection
      */
     public function isConnected()
     {
-        if ( ! ($this->mongoClient instanceof \MongoClient || $this->mongoClient instanceof \Mongo)) {
+        if ( ! ($this->mongoClient instanceof \MongoDB\Client || $this->mongoClient instanceof \Mongo)) {
             return false;
         }
 
@@ -302,7 +302,7 @@ class Connection
     }
 
     /**
-     * Wrapper method for MongoClient::listDBs().
+     * Wrapper method for \MongoDB\Client::listDBs().
      *
      * @see http://php.net/manual/en/mongoclient.listdbs.php
      * @return array
@@ -326,7 +326,7 @@ class Connection
     }
 
     /**
-     * Wrapper method for MongoClient::selectCollection().
+     * Wrapper method for \MongoDB\Client::selectCollection().
      *
      * @see http://php.net/manual/en/mongoclient.selectcollection.php
      * @param string $db
@@ -340,7 +340,7 @@ class Connection
     }
 
     /**
-     * Wrapper method for MongoClient::selectDatabase().
+     * Wrapper method for \MongoDB\Client::selectDatabase().
      *
      * This method will dispatch preSelectDatabase and postSelectDatabase
      * events.
@@ -366,7 +366,7 @@ class Connection
     }
 
     /**
-     * Wrapper method for MongoClient::__get().
+     * Wrapper method for \MongoDB\Client::__get().
      *
      * @see http://php.net/manual/en/mongoclient.get.php
      * @param string $database
@@ -379,7 +379,7 @@ class Connection
     }
 
     /**
-     * Wrapper method for MongoClient::__toString().
+     * Wrapper method for \MongoDB\Client::__toString().
      *
      * @see http://php.net/manual/en/mongoclient.tostring.php
      * @return string
@@ -401,7 +401,7 @@ class Connection
      */
     protected function doSelectDatabase($name)
     {
-        $mongoDB = $this->mongoClient->selectDB($name);
+        $mongoDB = $this->mongoClient->selectDatabase($name);
         $numRetries = $this->config->getRetryQuery();
         $loggerCallable = $this->config->getLoggerCallable();
 
@@ -444,10 +444,10 @@ class Connection
     }
 
     /**
-     * Converts "timeout" MongoClient constructor option to "connectTimeoutMS"
+     * Converts "timeout" \MongoDB\Client constructor option to "connectTimeoutMS"
      * for driver versions 1.4.0+.
      *
-     * Note: MongoClient actually allows case-insensitive option names, but
+     * Note: \MongoDB\Client actually allows case-insensitive option names, but
      * we'll only process the canonical version here.
      *
      * @param array $options
@@ -464,10 +464,10 @@ class Connection
     }
 
     /**
-     * Converts "wTimeout" MongoClient constructor option to "wTimeoutMS" for
+     * Converts "wTimeout" \MongoDB\Client constructor option to "wTimeoutMS" for
      * driver versions 1.4.0+.
      *
-     * Note: MongoClient actually allows case-insensitive option names, but
+     * Note: \MongoDB\Client actually allows case-insensitive option names, but
      * we'll only process the canonical version here.
      *
      * @param array $options
