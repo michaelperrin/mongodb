@@ -72,7 +72,7 @@ final class ReadPreference
      * Converts return values from getReadPreference() methods to the format
      * accepted by setReadPreference() methods.
      *
-     * This is necessary for MongoClient, MongoDB, and MongoCollection classes
+     * This is necessary for MongoClient, MongoDB, and MongoDB\Collection classes
      * in driver versions between 1.3.0 and 1.3.3.
      *
      * @since 1.1

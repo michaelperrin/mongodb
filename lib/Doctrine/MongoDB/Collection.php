@@ -35,7 +35,7 @@ use BadMethodCallException;
 use MongoCommandCursor;
 
 /**
- * Wrapper for the MongoCollection class.
+ * Wrapper for the MongoDB\Collection class.
  *
  * @since  1.0
  * @author Jonathan H. Wage <jonwage@gmail.com>
@@ -58,9 +58,9 @@ class Collection
     protected $eventManager;
 
     /**
-     * The MongoCollection instance being wrapped.
+     * The MongoDB\Collection instance being wrapped.
      *
-     * @var \MongoCollection
+     * @var \MongoDB\Collection
      */
     protected $mongoCollection;
 
@@ -74,12 +74,12 @@ class Collection
     /**
      * Constructor.
      *
-     * @param Database         $database        Database to which this collection belongs
-     * @param \MongoCollection $mongoCollection MongoCollection instance being wrapped
-     * @param EventManager     $evm             EventManager instance
-     * @param integer          $numRetries      Number of times to retry queries
+     * @param Database            $database        Database to which this collection belongs
+     * @param \MongoDB\Collection $mongoCollection MongoCollection instance being wrapped
+     * @param EventManager        $evm             EventManager instance
+     * @param integer             $numRetries      Number of times to retry queries
      */
-    public function __construct(Database $database, \MongoCollection $mongoCollection, EventManager $evm, $numRetries = 0)
+    public function __construct(Database $database, \MongoDB\Collection $mongoCollection, EventManager $evm, $numRetries = 0)
     {
         $this->database = $database;
         $this->mongoCollection = $mongoCollection;
@@ -137,7 +137,7 @@ class Collection
     }
 
     /**
-     * Wrapper method for MongoCollection::batchInsert().
+     * Wrapper method for MongoDB\Collection::batchInsert().
      *
      * This method will dispatch preBatchInsert and postBatchInsert events.
      *
@@ -199,7 +199,7 @@ class Collection
     }
 
     /**
-     * Wrapper method for MongoCollection::createDBRef().
+     * Wrapper method for MongoDB\Collection::createDBRef().
      *
      * @see http://php.net/manual/en/mongocollection.createdbref.php
      * @param mixed $documentOrId
@@ -221,7 +221,7 @@ class Collection
     }
 
     /**
-     * Wrapper method for MongoCollection::deleteIndex().
+     * Wrapper method for MongoDB\Collection::deleteIndex().
      *
      * @see http://php.net/manual/en/mongocollection.deleteindex.php
      * @param array|string $keys
@@ -233,7 +233,7 @@ class Collection
     }
 
     /**
-     * Wrapper method for MongoCollection::deleteIndexes().
+     * Wrapper method for MongoDB\Collection::deleteIndexes().
      *
      * @see http://php.net/manual/en/mongocollection.deleteindexes.php
      * @return array
@@ -280,7 +280,7 @@ class Collection
     }
 
     /**
-     * Wrapper method for MongoCollection::drop().
+     * Wrapper method for MongoDB\Collection::drop().
      *
      * This method will dispatch preDropCollection and postDropCollection
      * events.
@@ -304,7 +304,7 @@ class Collection
     }
 
     /**
-     * Wrapper method for MongoCollection::ensureIndex().
+     * Wrapper method for MongoDB\Collection::ensureIndex().
      *
      * @see http://php.net/manual/en/mongocollection.ensureindex.php
      * @param array $keys
@@ -321,7 +321,7 @@ class Collection
     }
 
     /**
-     * Wrapper method for MongoCollection::find().
+     * Wrapper method for MongoDB\Collection::find().
      *
      * This method will dispatch preFind and postFind events.
      *
@@ -415,7 +415,7 @@ class Collection
     }
 
     /**
-     * Wrapper method for MongoCollection::findOne().
+     * Wrapper method for MongoDB\Collection::findOne().
      *
      * This method will dispatch preFindOne and postFindOne events.
      *
@@ -455,7 +455,7 @@ class Collection
     }
 
     /**
-     * Wrapper method for MongoCollection::getDBRef().
+     * Wrapper method for MongoDB\Collection::getDBRef().
      *
      * This method will dispatch preGetDBRef and postGetDBRef events.
      *
@@ -483,7 +483,7 @@ class Collection
     }
 
     /**
-     * Wrapper method for MongoCollection::getIndexInfo().
+     * Wrapper method for MongoDB\Collection::getIndexInfo().
      *
      * @see http://php.net/manual/en/mongocollection.getindexinfo.php
      * @return array
@@ -494,9 +494,9 @@ class Collection
     }
 
     /**
-     * Return the MongoCollection instance being wrapped.
+     * Return the MongoDB\Collection instance being wrapped.
      *
-     * @return \MongoCollection
+     * @return \MongoDB\Collection
      */
     public function getMongoCollection()
     {
@@ -504,7 +504,7 @@ class Collection
     }
 
     /**
-     * Wrapper method for MongoCollection::getName().
+     * Wrapper method for MongoDB\Collection::getName().
      *
      * @see http://php.net/manual/en/mongocollection.getname.php
      * @return string
@@ -515,7 +515,7 @@ class Collection
     }
 
     /**
-     * Wrapper method for MongoCollection::getReadPreference().
+     * Wrapper method for MongoDB\Collection::getReadPreference().
      *
      * For driver versions between 1.3.0 and 1.3.3, the return value will be
      * converted for consistency with {@link Collection::setReadPreference()}.
@@ -529,7 +529,7 @@ class Collection
     }
 
     /**
-     * Wrapper method for MongoCollection::setReadPreference().
+     * Wrapper method for MongoDB\Collection::setReadPreference().
      *
      * @see http://php.net/manual/en/mongocollection.setreadpreference.php
      * @param string $readPreference
@@ -628,7 +628,7 @@ class Collection
     }
 
     /**
-     * Wrapper method for MongoCollection::insert().
+     * Wrapper method for MongoDB\Collection::insert().
      *
      * This method will dispatch preInsert and postInsert events.
      *
@@ -754,12 +754,12 @@ class Collection
     }
 
     /**
-     * Wrapper method for MongoCollection::parallelCollectionScan()
+     * Wrapper method for MongoDB\Collection::parallelCollectionScan()
      *
      * @param int $numCursors
      * @return CommandCursor[]
      *
-     * @throws BadMethodCallException if MongoCollection::parallelCollectionScan() is not available
+     * @throws BadMethodCallException if MongoDB\Collection::parallelCollectionScan() is not available
      */
     public function parallelCollectionScan($numCursors)
     {
@@ -772,7 +772,7 @@ class Collection
     }
 
     /**
-     * Wrapper method for MongoCollection::remove().
+     * Wrapper method for MongoDB\Collection::remove().
      *
      * This method will dispatch preRemove and postRemove events.
      *
@@ -802,7 +802,7 @@ class Collection
     }
 
     /**
-     * Wrapper method for MongoCollection::save().
+     * Wrapper method for MongoDB\Collection::save().
      *
      * This method will dispatch preSave and postSave events.
      *
@@ -832,7 +832,7 @@ class Collection
     }
 
     /**
-     * Wrapper method for MongoCollection::update().
+     * Wrapper method for MongoDB\Collection::update().
      *
      * This method will dispatch preUpdate and postUpdate events.
      *
@@ -887,7 +887,7 @@ class Collection
     }
 
     /**
-     * Wrapper method for MongoCollection::validate().
+     * Wrapper method for MongoDB\Collection::validate().
      *
      * @see http://php.net/manual/en/mongocollection.validate.php
      * @param string $scanData
@@ -899,11 +899,11 @@ class Collection
     }
 
     /**
-     * Wrapper method for MongoCollection::__get().
+     * Wrapper method for MongoDB\Collection::__get().
      *
      * @see http://php.net/manual/en/mongocollection.get.php
      * @param string $name
-     * @return \MongoCollection
+     * @return \MongoDB\Collection
      */
     public function __get($name)
     {
@@ -911,7 +911,7 @@ class Collection
     }
 
     /**
-     * Wrapper method for MongoCollection::__toString().
+     * Wrapper method for MongoDB\Collection::__toString().
      *
      * @see http://www.php.net/manual/en/mongocollection.--tostring.php
      * @return string
@@ -976,7 +976,7 @@ class Collection
      * @param array $pipeline
      * @param array $options
      * @return CommandCursor
-     * @throws BadMethodCallException if MongoCollection::aggregateCursor() is not available
+     * @throws BadMethodCallException if MongoDB\Collection::aggregateCursor() is not available
      */
     protected function doAggregateCursor(array $pipeline, array $options = array())
     {

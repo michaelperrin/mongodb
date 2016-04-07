@@ -194,6 +194,6 @@ class ConnectionTest extends PHPUnit_Framework_TestCase
 
     private function getMockMongoCollection()
     {
-        return $this->getMock('MongoCollection', array(), array(), '', false, false);
+        return $this->getMock('MongoDB\Collection', array(), array(), '', false, false);
     }
 }

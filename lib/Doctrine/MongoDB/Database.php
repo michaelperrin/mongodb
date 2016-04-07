@@ -492,7 +492,7 @@ class Database
      *
      * @see http://php.net/manual/en/mongodb.get.php
      * @param string $name
-     * @return \MongoCollection
+     * @return \MongoDB\Collection
      */
     public function __get($name)
     {

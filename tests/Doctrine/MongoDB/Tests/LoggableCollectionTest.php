@@ -33,7 +33,7 @@ class LoggableCollectionTest extends \PHPUnit_Framework_TestCase
             ->method('getName')
             ->will($this->returnValue(self::databaseName));
 
-        $mongoCollection = $this->getMockBuilder('MongoCollection')
+        $mongoCollection = $this->getMockBuilder('MongoDB\Collection')
             ->disableOriginalConstructor()
             ->getMock();
 

@@ -293,7 +293,7 @@ class CollectionEventsChangingContextTest extends \PHPUnit_Framework_TestCase
 
     private function getMockMongoCollection()
     {
-        return $this->getMockBuilder('MongoCollection')
+        return $this->getMockBuilder('MongoDB\Collection')
             ->disableOriginalConstructor()
             ->getMock();
     }

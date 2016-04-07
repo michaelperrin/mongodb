@@ -292,7 +292,7 @@ class GridFS extends Collection
             $this->storeFile($file, $document);
 
             if (!$newObjHasModifiers) {
-                /* TODO: MongoCollection::update() would return a boolean if
+                /* TODO: MongoDB\Collection::update() would return a boolean if
                  * $newObj was not empty, or an array describing the update
                  * operation. Improvise, since we only stored the file and that
                  * returns the "_id" field.
