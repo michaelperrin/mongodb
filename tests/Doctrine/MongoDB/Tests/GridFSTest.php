@@ -134,7 +134,7 @@ class GridFSTest extends BaseTest
     public function testUpsert()
     {
         $gridFS = $this->getGridFS();
-        $id = new \MongoId();
+        $id = new \MongoDB\BSON\ObjectID();
 
         $path = __DIR__.'/file.txt';
         $file = new GridFSFile($path);

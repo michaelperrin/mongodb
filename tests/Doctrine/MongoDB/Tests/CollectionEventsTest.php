@@ -46,7 +46,7 @@ class CollectionEventsTest extends \PHPUnit_Framework_TestCase
     {
         $documents = array(array('x' => 1));
         $options = array('continueOnError' => true);
-        $result = array(array('_id' => new \MongoId(), 'x' => 1));
+        $result = array(array('_id' => new \MongoDB\BSON\ObjectID(), 'x' => 1));
 
         $collection = $this->getMockCollection(array('doBatchInsert' => $result));
 
@@ -190,7 +190,7 @@ class CollectionEventsTest extends \PHPUnit_Framework_TestCase
     {
         $document = array('x' => 1);
         $options = array('w' => 1);
-        $result = array('_id' => new \MongoId(), 'x' => 1);
+        $result = array('_id' => new \MongoDB\BSON\ObjectID(), 'x' => 1);
 
         $collection = $this->getMockCollection(array('doInsert' => $result));
 
@@ -258,7 +258,7 @@ class CollectionEventsTest extends \PHPUnit_Framework_TestCase
     {
         $document = array('x' => 1);
         $options = array('w' => 1);
-        $result = array('_id' => new \MongoId(), 'x' => 1);
+        $result = array('_id' => new \MongoDB\BSON\ObjectID(), 'x' => 1);
 
         $collection = $this->getMockCollection(array('doSave' => $result));
 
